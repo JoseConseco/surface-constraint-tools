@@ -104,7 +104,7 @@ class View3DGraphic():
             return
 
         bgl.glPointSize(
-            bpy.context.user_preferences.themes['Default'].view_3d.vertex_size
+            bpy.context.preferences.themes['Default'].view_3d.vertex_size
         )
 
         # Draw each vertex using its corresponding color map value.

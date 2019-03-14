@@ -21,7 +21,7 @@
 import bpy
 
 def draw_smooth_vertices_ui(layout):
-    addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+    addon = bpy.context.preferences.addons[__package__.split(".")[0]]
     props = addon.preferences.smooth_vertices
 
     if not props.settings_ui_is_visible:
@@ -32,7 +32,7 @@ def draw_smooth_vertices_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_RIGHT', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Smooth Vertices")
+        row.label(text="Smooth Vertices")
         row.operator(
             "mesh.sct_smooth_vertices", text = "", icon = 'MOD_SMOOTH'
         )
@@ -45,7 +45,7 @@ def draw_smooth_vertices_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_DOWN', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Smooth Vertices") 
+        row.label(text="Smooth Vertices") 
         row.operator(
             "mesh.sct_smooth_vertices", text = "", icon = 'MOD_SMOOTH'
         )

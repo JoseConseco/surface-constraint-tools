@@ -21,7 +21,7 @@
 import bpy
 
 def draw_display_properties_ui(layout):
-    addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+    addon = bpy.context.preferences.addons[__package__.split(".")[0]]
     props = addon.preferences.mesh_brush
 
     col = layout.column()

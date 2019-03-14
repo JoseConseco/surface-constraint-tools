@@ -27,8 +27,7 @@ from ..properties.SurfaceConstraintProps import SurfaceConstraintProps
 class SurfaceConstraintToolsPrefs(bpy.types.AddonPreferences):
     bl_idname = __package__.split('.')[0]
 
-    mesh_brush = bpy.props.PointerProperty(type = MeshBrushProps) 
-    shrinkwrap = bpy.props.PointerProperty(type = ShrinkwrapProps)
-    smooth_vertices = bpy.props.PointerProperty(type = SmoothVerticesProps)
-    surface_constraint =\
-        bpy.props.PointerProperty(type = SurfaceConstraintProps)
+    mesh_brush: bpy.props.PointerProperty(type = MeshBrushProps) 
+    shrinkwrap: bpy.props.PointerProperty(type = ShrinkwrapProps)
+    smooth_vertices: bpy.props.PointerProperty(type = SmoothVerticesProps)
+    surface_constraint: bpy.props.PointerProperty(type = SurfaceConstraintProps)

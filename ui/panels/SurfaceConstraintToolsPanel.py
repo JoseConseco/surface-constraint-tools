@@ -33,7 +33,7 @@ class SurfaceConstraintToolsPanel(bpy.types.Panel):
     bl_idname = "VIEW3D_PT_surface_constraint_tools"
     bl_label = "Surface Constraint Tools"
     bl_space_type = 'VIEW_3D'
-    bl_region_type = 'TOOLS'
+    bl_region_type = 'UI'
 
     @classmethod
     def poll(cls, context):

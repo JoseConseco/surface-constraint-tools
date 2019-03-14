@@ -33,7 +33,7 @@ class PickSurfaceConstraint(bpy.types.Operator):
         return bpy.context.space_data.type == 'VIEW_3D'
 
     def __init__(self):
-        self.addon = bpy.context.user_preferences.addons[self.addon_key]
+        self.addon = bpy.context.preferences.addons[self.addon_key]
         self.props = self.addon.preferences.surface_constraint 
 
     def finish(self):
@@ -43,7 +43,7 @@ class PickSurfaceConstraint(bpy.types.Operator):
 
         # Reveal the temporarily hidden objects.
         for hidden_object in self.temporarily_hidden_objects:
-            hidden_object.hide = False
+            hidden_object.hide_set(True)
 
         # Restore the active area's header to it's initial state.
         bpy.context.area.header_text_set()
@@ -65,7 +65,7 @@ class PickSurfaceConstraint(bpy.types.Operator):
             if visible_object.type == 'MESH':
                 mesh_objects.append(visible_object)
             else:
-                visible_object.hide = True
+                visible_object.hide_set(True)
                 temporarily_hidden_objects.append(visible_object)
 
         # Display the operator's instructions in the active area's header.

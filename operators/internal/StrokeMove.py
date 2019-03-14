@@ -31,7 +31,7 @@ class StrokeMove(bpy.types.Operator):
     addon_key = __package__.split(".")[0]
 
     def __init__(self):
-        self.addon = bpy.context.user_preferences.addons[self.addon_key]
+        self.addon = bpy.context.preferences.addons[self.addon_key]
         self.props = self.addon.preferences.mesh_brush
 
     def finish(self):
@@ -130,7 +130,7 @@ class StrokeMove(bpy.types.Operator):
                     active_object.rotation_euler
                 temp_target.rotation_mode = active_object.rotation_mode
                 temp_target.scale = active_object.scale
-                temp_target.hide = True
+                temp_target.hide_set(True)
                 context.scene.objects.link(temp_target)
 
                 # Set the temporary target of the surface constraint.

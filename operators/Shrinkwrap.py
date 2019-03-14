@@ -38,7 +38,7 @@ class Shrinkwrap(bpy.types.Operator):
         # constraint's target must exist and not reference the active object.
         # Additionally, the operator is only valid in a 'VIEW_3D' space.
         active_object = context.active_object
-        addon = bpy.context.user_preferences.addons[cls.addon_key]
+        addon = bpy.context.preferences.addons[cls.addon_key]
         target = addon.preferences.surface_constraint.target
         return (
             active_object and
@@ -51,7 +51,7 @@ class Shrinkwrap(bpy.types.Operator):
         )
 
     def __init__(self):
-        self.addon = bpy.context.user_preferences.addons[self.addon_key]
+        self.addon = bpy.context.preferences.addons[self.addon_key]
         self.props = self.addon.preferences.shrinkwrap
 
     def execute(self, context):

@@ -30,7 +30,7 @@ class ResizeMeshBrush(bpy.types.Operator):
     addon_key = __package__.split(".")[0]
 
     def __init__(self):
-        self.addon = bpy.context.user_preferences.addons[self.addon_key]
+        self.addon = bpy.context.preferences.addons[self.addon_key]
         self.props = self.addon.preferences.mesh_brush
 
     def invoke(self, context, event):

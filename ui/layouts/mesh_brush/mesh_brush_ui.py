@@ -25,7 +25,7 @@ from .options_ui import draw_options_ui
 from .symmetry_ui import draw_symmetry_ui
 
 def draw_mesh_brush_ui(layout):
-    addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+    addon = bpy.context.preferences.addons[__package__.split(".")[0]]
     props = addon.preferences.mesh_brush
 
     if not props.settings_ui_is_visible:
@@ -36,7 +36,7 @@ def draw_mesh_brush_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_RIGHT', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Mesh Brush")
+        row.label(text="Mesh Brush")
         row.operator("mesh.sct_mesh_brush", text = "", icon = 'BRUSH_DATA') 
     else:
         col = layout.column(align = True)
@@ -47,7 +47,7 @@ def draw_mesh_brush_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_DOWN', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Mesh Brush") 
+        row.label(text="Mesh Brush") 
         row.operator("mesh.sct_mesh_brush", text = "", icon = 'BRUSH_DATA')
 
         box = col.box()

@@ -23,17 +23,17 @@ import bpy
 class ObjectPicker(bpy.types.Operator):
     bl_idname = "object.objectpicker_surf_constraint"
     bl_label = "Pick Obj"
-    targetPropName =  bpy.props.StringProperty()
+    targetPropName :  bpy.props.StringProperty()
     
     def execute(self, context):
-        addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+        addon = bpy.context.preferences.addons[__package__.split(".")[0]]
         props = addon.preferences.surface_constraint
-        if context.active_object and context.active_object.select:
+        if context.active_object and context.active_object.select_get():
             props[self.targetPropName]=context.active_object.name
         return {'FINISHED'}
 
 def draw_surface_constraint_ui(layout):
-    addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+    addon = bpy.context.preferences.addons[__package__.split(".")[0]]
     props = addon.preferences.surface_constraint
 
     if not props.settings_ui_is_visible:
@@ -44,7 +44,7 @@ def draw_surface_constraint_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_RIGHT', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Surface Constraint")
+        row.label(text="Surface Constraint")
         row.operator(
             "view3d.sct_pick_surface_constraint", text = "", icon = 'HAND'
         )
@@ -57,7 +57,7 @@ def draw_surface_constraint_ui(layout):
             "wm.context_toggle", text = "", icon = 'TRIA_DOWN', emboss = False
         )
         op.data_path = "{0}.settings_ui_is_visible".format(props.data_path)
-        row.label("Surface Constraint") 
+        row.label(text="Surface Constraint") 
         row.operator(
             "view3d.sct_pick_surface_constraint", text = "", icon = 'HAND'
         )

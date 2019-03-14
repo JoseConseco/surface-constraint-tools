@@ -20,7 +20,7 @@
 
 import bpy
 
-addon = bpy.context.user_preferences.addons[__package__.split(".")[0]]
+addon = bpy.context.preferences.addons[__package__.split(".")[0]]
 
 def load_pre(scene):
     # Disable automatic shrinkwrapping before saving.

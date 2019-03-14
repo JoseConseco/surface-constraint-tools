@@ -20,13 +20,11 @@
 
 bl_info = {
     "name" : "Surface Constraint Tools",
-    "description" : (
-        "A collection of tools for modeling on the surface of another mesh"
-    ),
+    "description" : ( "A collection of tools for modeling on the surface of another mesh" ),
     "location" : "3D View > Tool Shelf > Surface Constraint Tools",
-    "author" : "Brett Fedack",
-    "version" : (1, 0),
-    "blender" : (2, 76, 9),
+    "author" : "Brett Fedack, Updated by Jose Conseco",
+    "version" : (2, 0),
+    "blender" : (2, 80, 0),
     "category" : "3D View"
 }
 
@@ -60,16 +58,13 @@ else:
     from .ui.panels import SurfaceConstraintToolsPanel
     from .preferences import SurfaceConstraintToolsPrefs
 
-import bpy
+from . import auto_load
 
-import traceback
+auto_load.init()
 
 def register():
-    try:
-        bpy.utils.register_module(__name__)
-    except: traceback.print_exc()
+    auto_load.register()
+
 
 def unregister():
-    try:
-        bpy.utils.unregister_module(__name__)
-    except: traceback.print_exc()
+    auto_load.unregister()

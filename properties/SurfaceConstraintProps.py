@@ -24,7 +24,7 @@ from ..function_modules import auto_shrinkwrap_handlers
 
 class SurfaceConstraintProps(bpy.types.PropertyGroup):
     data_path = (
-        "user_preferences.addons['{0}'].preferences.surface_constraint"
+        "preferences.addons['{0}'].preferences.surface_constraint"
     ).format(__package__.split(".")[0])
 
     def update_auto_shrinkwrap(self, context):
@@ -32,7 +32,7 @@ class SurfaceConstraintProps(bpy.types.PropertyGroup):
         load_pre = handlers.load_pre
         save_pre = handlers.save_pre
         save_post = handlers.save_post
-        scene_update_pre = handlers.scene_update_pre
+        scene_update_pre = handlers.depsgraph_update_pre
 
         # Automatic shrinkwrapping has been enabled.
         if self.auto_shrinkwrap_is_enabled:
@@ -94,34 +94,32 @@ class SurfaceConstraintProps(bpy.types.PropertyGroup):
                 bpy.ops.object.mode_set(mode='EDIT')
 
     # Surface Constraint Settings
-    available_targets = \
-        bpy.props.CollectionProperty(type=bpy.types.PropertyGroup)
-    auto_shrinkwrap_is_enabled = bpy.props.BoolProperty(
+    available_targets: bpy.props.CollectionProperty(type=bpy.types.PropertyGroup)
+    auto_shrinkwrap_is_enabled: bpy.props.BoolProperty(
         name="Auto Shrinkwrap",
         description=(
-                "Maintain a shrinkwrap modifier on the active mesh object, and " +
-                "reapply it after the end of each operation."
+            "Maintain a shrinkwrap modifier on the active mesh object, and " +
+            "reapply it after the end of each operation."
         ),
         default=False,
         update=update_auto_shrinkwrap
     )
-    auto_shrinkwrap_is_enabled_pre_save = bpy.props.BoolProperty(
+    auto_shrinkwrap_is_enabled_pre_save: bpy.props.BoolProperty(
         description=(
-                "Indicate whether or not automatic shrinkwrapping is enabled " +
-                "prior to saving the blend file."
+            "Indicate whether or not automatic shrinkwrapping is enabled " +
+            "prior to saving the blend file."
         ),
         default=False
     )
-    auto_shrinkwrap_is_paused = bpy.props.BoolProperty(
-        description= \
-            "Control the execution of the auto shrinkwrap handler.",
+    auto_shrinkwrap_is_paused: bpy.props.BoolProperty(
+        description="Control the execution of the auto shrinkwrap handler.",
         default=False
     )
-    direction = bpy.props.EnumProperty(
+    direction: bpy.props.EnumProperty(
         name="Shrinkwrap Direction",
         description=(
-                "Shrinkwrap along vertex normals or towards the closest points " +
-                "on the target object."
+            "Shrinkwrap along vertex normals or towards the closest points " +
+            "on the target object."
         ),
         default='CLOSEST_POINT',
         items=[
@@ -129,32 +127,31 @@ class SurfaceConstraintProps(bpy.types.PropertyGroup):
             ('VERTEX_NORMAL', "Vertex Normal", "")
         ]
     )
-    offset = bpy.props.FloatProperty(
+    offset: bpy.props.FloatProperty(
         name="Offset",
         description=(
-                "Distance to keep constrained vertices offset from the target " +
-                "mesh object's surface"
+            "Distance to keep constrained vertices offset from the target " +
+            "mesh object's surface"
         ),
         default=0.0,
         step=1
     )
-    target = bpy.props.StringProperty(
+    target: bpy.props.StringProperty(
         name="Target",
         description=(
-                "Target object to which the active mesh object's vertices are " +
-                "constrained"
+            "Target object to which the active mesh object's vertices are " +
+            "constrained"
         )
     )
-    wrap_method_map = \
-        {'CLOSEST_POINT': 'NEAREST_SURFACEPOINT', 'VERTEX_NORMAL': 'PROJECT'}
+    wrap_method_map = {'CLOSEST_POINT': 'NEAREST_SURFACEPOINT', 'VERTEX_NORMAL': 'PROJECT'}
 
     # Unique Identifiers
-    mesh_object_uid = bpy.props.StringProperty()
-    modifier_uid = bpy.props.StringProperty()
-    operator_uid = bpy.props.StringProperty()
+    mesh_object_uid: bpy.props.StringProperty()
+    modifier_uid: bpy.props.StringProperty()
+    operator_uid: bpy.props.StringProperty()
 
     # UI Visibility
-    settings_ui_is_visible = bpy.props.BoolProperty(
+    settings_ui_is_visible: bpy.props.BoolProperty(
         name="Settings UI Visibility",
         description="Show/hide the Settings UI.",
         default=False

@@ -48,7 +48,7 @@ class MeshBrush(bpy.types.Operator):
         )
 
     def __init__(self):
-        self.addon = bpy.context.user_preferences.addons[self.addon_key]
+        self.addon = bpy.context.preferences.addons[self.addon_key]
         self.props = self.addon.preferences.mesh_brush 
 
     def draw_post_pixel_callback(self):
@@ -120,13 +120,13 @@ class MeshBrush(bpy.types.Operator):
         props.undo_stack.clear()
 
         # Reselect the active mesh object.
-        active_object.select = True
+        active_object.select_set(True)
 
         # Recombine the separate pieces of the original mesh object, if
         # necessary.
         if props.selection_is_isolated and self.selection_is_isolatable:
             # Reveal the hidden mesh object.
-            self.hidden_portion.hide = False
+            self.hidden_portion.hide_set(True)
 
             # Rejoin the separate mesh objects into one.
             bpy.ops.object.join()
@@ -272,7 +272,7 @@ class MeshBrush(bpy.types.Operator):
                     set(context.selected_objects).difference(selected).pop()
                 self.hidden_portion.name =\
                     "{0} (Hidden)".format(active_object.name)
-                self.hidden_portion.hide = True
+                self.hidden_portion.hide_set(True)
 
                 # Now, the only vertices that remain in the active mesh
                 # object's active vertex group are those that were along the
@@ -316,7 +316,7 @@ class MeshBrush(bpy.types.Operator):
 
         # Deselect the active mesh object so that its wireframe color matches
         # Edit mode's edge color.
-        active_object.select = False
+        active_object.select_set(False)
 
         # Derive the symmetrical brushes, if necessary.
         symmetry_axes = set()

@@ -22,11 +22,11 @@ import bpy
 
 class ShrinkwrapProps(bpy.types.PropertyGroup):
     data_path =(
-        "user_preferences.addons['{0}'].preferences.shrinkwrap"
+        "preferences.addons['{0}'].preferences.shrinkwrap"
     ).format(__package__.split(".")[0])
 
     # Shrinkwrap Settings
-    only_selected_are_affected = bpy.props.BoolProperty(
+    only_selected_are_affected : bpy.props.BoolProperty(
         name = "Selected Only",
         description = (
             "Limit the shrinkwrap operation's effect to the selected " +
@@ -36,7 +36,7 @@ class ShrinkwrapProps(bpy.types.PropertyGroup):
     )
 
     # UI Visibility
-    settings_ui_is_visible = bpy.props.BoolProperty(
+    settings_ui_is_visible : bpy.props.BoolProperty(
         name = "Settings UI Visibility",
         description = "Show/hide the Settings UI.",
         default = False
