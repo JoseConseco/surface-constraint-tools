@@ -65,7 +65,7 @@ class View3DGraphic():
         rotation_matrix = Matrix.Rotation(2 * pi / segments, 3, brush_normal)
         vertices = [point_on_equator]
         for side in range(segments - 1):
-            vertices.append(rotation_matrix * vertices[-1])
+            vertices.append(rotation_matrix @ vertices[-1])
 
         # Translate the vertices from the world origin to the brush's center.
         brush_center = brush.center
@@ -130,7 +130,7 @@ class View3DGraphic():
         rotation_matrix = Matrix.Rotation(2 * pi / segments, 2)
         vertices = [Vector((radius, 0))]
         for side in range(segments - 1):
-            vertices.append(rotation_matrix * vertices[-1])
+            vertices.append(rotation_matrix @ vertices[-1])
 
         # Translate the vertices from the origin to the circle's center.
         for vertex in vertices:

@@ -39,17 +39,17 @@ def apply_shrinkwrap(offset, target, wrap_method, affected_indices = list()):
         bpy.ops.object.mode_set(mode = 'OBJECT')
 
     # Group the affected vertex indices.
-    vertex_group = active_object.vertex_groups.new("Affected Indices")
+    vertex_group = active_object.vertex_groups.new(name = "Affected Indices")
     vertex_group.add(affected_indices, 1, 'ADD')
 
     # Add a shrinkwrap modifier to the active object.
     shrinkwrap_modifier = modifiers.new(name = "", type = 'SHRINKWRAP')
     shrinkwrap_modifier.offset = offset
     shrinkwrap_modifier.target = bpy.data.objects[target]
-    shrinkwrap_modifier.use_keep_above_surface = True
     shrinkwrap_modifier.use_negative_direction = True
     shrinkwrap_modifier.vertex_group = vertex_group.name
     shrinkwrap_modifier.wrap_method = wrap_method
+    shrinkwrap_modifier.wrap_mode = 'OUTSIDE_SURFACE'
 
     # Move the shrinkwrap modifier to the top of the stack.
     while modifiers[0] != shrinkwrap_modifier:
@@ -76,7 +76,7 @@ def apply_smooth(iterations, affected_indices = list()):
     # Group the affected vertex indices.
     if active_object.mode == 'EDIT':
         bpy.ops.object.mode_set(mode = 'OBJECT')
-    vertex_group = active_object.vertex_groups.new("Affected Indices")
+    vertex_group = active_object.vertex_groups.new(name = "Affected Indices")
     vertex_group.add(affected_indices, 1, 'ADD')
 
     # Add a smooth modifier to the active object.

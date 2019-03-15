@@ -44,9 +44,9 @@ class VertexFilter():
         elif space == 'WORLD':
             model_matrix = self.mesh_object.matrix_world
             self.indices = {
-                index : model_matrix * vertices[index].normal
+                index : model_matrix @ vertices[index].normal
                 for index in self.indices
-                if (model_matrix * vertices[index].normal).dot(
+                if (model_matrix @ vertices[index].normal).dot(
                     direction_vector
                 ) > 0
             }
@@ -148,7 +148,7 @@ class VertexFilter():
             co = Vector(vertex)
             co.resize(4)
             co.w = 1
-            co.xyzw = projection_matrix * co
+            co.xyzw = projection_matrix @ co
             w = co.w
 
             # Determine if the coordinates are within the view projection.

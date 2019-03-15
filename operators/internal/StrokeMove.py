@@ -52,7 +52,7 @@ class StrokeMove(bpy.types.Operator):
         # Update the octree.
         model_matrix = active_object.matrix_world
         world_space_submap = {
-            index : model_matrix * vertices[index].co.copy()
+            index : model_matrix @ vertices[index].co.copy()
             for index in indices_affected_by_stroke
         }
         octree = props.octree
@@ -103,7 +103,7 @@ class StrokeMove(bpy.types.Operator):
         perspective_matrix = bpy.context.region_data.perspective_matrix
         co = primary_brush.center.resized(4)
         co.w = 1
-        co = perspective_matrix * co
+        co = perspective_matrix @ co
         self.stroke_z_depth = co.z / co.w
 
         # If the target is also the mesh object that is being operated upon,
@@ -189,7 +189,7 @@ class StrokeMove(bpy.types.Operator):
         co.resize(4)
         co.z = self.stroke_z_depth
         co.w = 1
-        co = inverted_perspective_matrix * co
+        co = inverted_perspective_matrix @ co
         w = co.w
         co.resize(3)
         co /= w
@@ -201,13 +201,13 @@ class StrokeMove(bpy.types.Operator):
             # Determine the displaced position of the brush caused by the
             # stroke.
             displaced_brush_center =\
-                brush.transformation_matrix * stroke_terminal_co
+                brush.transformation_matrix @ stroke_terminal_co
 
             # Calculate an object space displacement vector between the brush's
             # original position and its displaced position.
             object_space_displacement = (
-                inverted_model_matrix *  displaced_brush_center -
-                inverted_model_matrix * brush.center
+                inverted_model_matrix @  displaced_brush_center -
+                inverted_model_matrix @ brush.center
             )
 
             # Move the brush to its displaced position.
@@ -234,7 +234,7 @@ class StrokeMove(bpy.types.Operator):
         # Update the octree's coordinate map.
         model_matrix = active_object.matrix_world
         world_space_submap = {
-            index : model_matrix * vertices[index].co
+            index : model_matrix @ vertices[index].co
             for index in indices_affected_by_stroke
         }
         self.props.octree.coordinate_map.update(world_space_submap)

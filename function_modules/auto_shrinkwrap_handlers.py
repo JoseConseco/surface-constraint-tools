@@ -139,9 +139,10 @@ def scene_update_pre(scene):
             modifier.show_in_editmode = True
             modifier.show_on_cage = True
             modifier.target = bpy.data.objects[target]
-            modifier.use_keep_above_surface = True
             modifier.use_negative_direction = True
             modifier.wrap_method = wrap_method
+            modifier.wrap_mode = 'OUTSIDE_SURFACE'
+
 
             # Move the modifier to the top of the stack.
             while active_object.modifiers[0] != modifier:
@@ -167,8 +168,6 @@ def scene_update_pre(scene):
                 modifier.show_on_cage = True
             if modifier.target != bpy.data.objects[target]:
                 modifier.target = bpy.data.objects[target]
-            if modifier.use_keep_above_surface != True:
-                modifier.use_keep_above_surface = True
             if modifier.use_negative_direction != True:
                 modifier.use_negative_direction = True
             if modifier.wrap_method != wrap_method:

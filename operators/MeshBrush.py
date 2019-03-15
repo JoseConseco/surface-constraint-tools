@@ -492,7 +492,7 @@ class MeshBrush(bpy.types.Operator):
             # Update the octree.
             model_matrix = active_object.matrix_world
             world_space_submap = {
-                index : model_matrix * vertices[index].co.copy()
+                index : model_matrix @ vertices[index].co.copy()
                 for index in stroke_displacement_map
             }
             octree.coordinate_map.update(world_space_submap)
@@ -526,7 +526,7 @@ class MeshBrush(bpy.types.Operator):
             # Update the octree.
             model_matrix = active_object.matrix_world
             world_space_submap = {
-                index : model_matrix * vertices[index].co.copy()
+                index : model_matrix @ vertices[index].co.copy()
                 for index in stroke_displacement_map
             }
             octree.coordinate_map.update(world_space_submap)

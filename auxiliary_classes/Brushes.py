@@ -58,17 +58,17 @@ class Brushes():
                 # Create a transformation matrix to rotate a point around the
                 # axis of symmetry that may be offset from the world origin.
                 transformation_matrix = symmetry_axis_offset * (
-                    rotation_matrix * symmetry_axis_offset.inverted()
+                    rotation_matrix @ symmetry_axis_offset.inverted()
                 )
 
                 # Derive the radial brush, and append it to the list of
                 # derived brushes.
                 derived_brush = Brush()
                 derived_brush.center =\
-                    transformation_matrix * primary_brush_center
+                    transformation_matrix @ primary_brush_center
                 derived_brush.normal = ((
-                        transformation_matrix * primary_brush_normal - (
-                            transformation_matrix * Vector((0, 0, 0))
+                        transformation_matrix @ primary_brush_normal - (
+                            transformation_matrix @ Vector((0, 0, 0))
                         )
                     ).normalized()
                 )
@@ -103,15 +103,15 @@ class Brushes():
             # of derived brushes.
             for brush in [primary_brush] + derived_brushes:
                 derived_brush = Brush()
-                derived_brush.center = transformation_matrix * brush.center
+                derived_brush.center = transformation_matrix @ brush.center
                 derived_brush.normal = ((
-                        transformation_matrix * brush.normal - (
-                            transformation_matrix * Vector((0, 0, 0))
+                        transformation_matrix @ brush.normal - (
+                            transformation_matrix @ Vector((0, 0, 0))
                         )
                     ).normalized()
                 )
                 derived_brush.radius = brush.radius
-                derived_brush.transformation_matrix = transformation_matrix * (
+                derived_brush.transformation_matrix = transformation_matrix @ (
                     brush.transformation_matrix
                 )
                 derived_brushes.append(derived_brush)
@@ -157,7 +157,7 @@ class Brushes():
                 if distance <= normal_sampling_radius:
                     # Disregard vertices that face away from the primary
                     # brush's initial normal.
-                    vertex_normal = model_matrix * (
+                    vertex_normal = model_matrix @ (
                         vertices[vertex_index].normal
                     ).normalized()
                     if vertex_normal.dot(primary_brush_normal) > 0:
@@ -296,7 +296,7 @@ class Brushes():
         co = primary_brush.center.copy()
         co.resize(4)
         co.w = 1
-        co.xyzw = projection_matrix * co
+        co.xyzw = projection_matrix @ co
         w = co.w
         co.xyz /= w
         NDC_z_depth = co.z
@@ -337,22 +337,22 @@ class Brushes():
         symmetry_axes = self.symmetry_axes
         if 'X' in object_axes:
             symmetry_axes.append((
-                    model_matrix * Vector((1, 0, 0)) -(
-                        model_matrix * Vector((-1, 0, 0))
+                    model_matrix @ Vector((1, 0, 0)) -(
+                        model_matrix @ Vector((-1, 0, 0))
                     )
                 ).normalized()
             )
         if 'Y' in object_axes:
             symmetry_axes.append((
-                    model_matrix * Vector((0, 1, 0)) -(
-                        model_matrix * Vector((0, -1, 0))
+                    model_matrix @ Vector((0, 1, 0)) -(
+                        model_matrix @ Vector((0, -1, 0))
                     )
                 ).normalized()
             )
         if 'Z' in object_axes:
             symmetry_axes.append((
-                    model_matrix * Vector((0, 0, 1)) -(
-                        model_matrix * Vector((0, 0, -1))
+                    model_matrix @ Vector((0, 0, 1)) -(
+                        model_matrix @ Vector((0, 0, -1))
                     )
                 ).normalized()
             )
@@ -366,10 +366,10 @@ class Brushes():
         primary_brush_radius = primary_brush.radius
         for brush in self.derived_brushes:
             transformation_matrix = brush.transformation_matrix
-            brush.center = transformation_matrix * primary_brush_center
+            brush.center = transformation_matrix @ primary_brush_center
             brush.normal = ((
-                    transformation_matrix * primary_brush_normal - (
-                        transformation_matrix * Vector((0, 0, 0))
+                    transformation_matrix @ primary_brush_normal - (
+                        transformation_matrix @ Vector((0, 0, 0))
                     )
                 ).normalized()
             )

@@ -91,7 +91,7 @@ class RayCaster():
         if self.coordinate_system == 'OBJECT':
             inverse_model_matrix = mesh_object.matrix_world.inverted()
             for co in ray_origin, ray_target:
-                co.xyz = inverse_model_matrix * co
+                co.xyz = inverse_model_matrix @ co
 
         # Set the ray caster object's ray attributes.
         self.ray_origin = ray_origin
@@ -121,7 +121,7 @@ class RayCaster():
             ray_origin = self.ray_origin.copy()
             ray_target = self.ray_target.copy()
             for co in ray_origin, ray_target:
-                co.xyz = inverse_model_matrix * co
+                co.xyz = inverse_model_matrix @ co
         else:
             ray_origin = self.ray_origin
             ray_target = self.ray_target
@@ -139,7 +139,7 @@ class RayCaster():
         if self.coordinate_system == 'WORLD':
             model_matrix = mesh_object.matrix_world
             for co in location, normal:
-                co.xyz = model_matrix * co
+                co.xyz = model_matrix @ co
             normal = (normal - mesh_object.location).normalized()
 
         # Return the intersection information.

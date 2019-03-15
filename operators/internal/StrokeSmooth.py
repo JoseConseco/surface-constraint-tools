@@ -118,7 +118,7 @@ class StrokeSmoothBrush(bpy.types.Operator):
         # Update the octree.
         model_matrix = active_object.matrix_world
         world_space_submap = {
-            index : model_matrix * post_dab_object_space_map[index]
+            index : model_matrix @ post_dab_object_space_map[index]
             for index in indices_affected_by_dab
         }
         octree = props.octree
