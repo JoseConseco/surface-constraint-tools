@@ -46,7 +46,7 @@ class PickSurfaceConstraint(bpy.types.Operator):
             hidden_object.hide_set(True)
 
         # Restore the active area's header to it's initial state.
-        bpy.context.area.header_text_set()
+        bpy.context.area.header_text_set(text='')
 
     def invoke(self, context, event): 
         # Exit Edit mode, if necessary.
@@ -70,7 +70,7 @@ class PickSurfaceConstraint(bpy.types.Operator):
 
         # Display the operator's instructions in the active area's header.
         context.area.header_text_set(
-            "Pick (LMB) a mesh object to use as the surface constraint's " +
+            text="Pick (LMB) a mesh object to use as the surface constraint's " +
             "target. Escape/RMB: Cancel"
         )
 
