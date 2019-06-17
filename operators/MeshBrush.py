@@ -171,7 +171,7 @@ class MeshBrush(bpy.types.Operator):
             bpy.ops.object.mode_set(mode = 'EDIT')
 
         # Restore the active area's header to its initial state.
-        bpy.context.area.header_text_set()
+        bpy.context.area.header_text_set(text='')
 
     def invoke(self, context, event):
         props = self.props
@@ -371,7 +371,7 @@ class MeshBrush(bpy.types.Operator):
 
         # Display the operator's instructions in the active area's header.
         context.area.header_text_set(
-            "Move: LMB    Smooth: Shift+LMB    Resize: RMB    Undo: " +
+            text="Move: LMB    Smooth: Shift+LMB    Resize: RMB    Undo: " +
             "Ctrl+Z    Redo: Ctrl+Shift+Z    Confirm: Enter/Escape"
         )
 
