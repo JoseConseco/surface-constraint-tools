@@ -235,7 +235,7 @@ class View3DGraphic():
         if space == 'OBJECT':
             matrix_world = mesh_object.matrix_world
             for co in corners:
-                co.xyz = matrix_world * co
+                co.xyz = matrix_world @ co
 
         bgl.glEnable(bgl.GL_BLEND)
         bgl.glColor3f(0, 1, 0.67)
