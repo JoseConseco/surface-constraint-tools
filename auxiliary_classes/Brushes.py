@@ -318,7 +318,7 @@ class Brushes():
         # Calculate the world space radius of the primary brush.
         co.resize(4)
         co.w = 1
-        co.xyzw = projection_matrix.inverted() * co
+        co.xyzw = projection_matrix.inverted() @ co
         w = co.w
         co.resize(3)
         co.xyz /= w
