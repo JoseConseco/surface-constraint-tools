@@ -180,7 +180,7 @@ class Octree():
         else:
             matrix_world = mesh_object.matrix_world
             coordinate_map = {
-                vertex.index : matrix_world * vertex.co
+                vertex.index : matrix_world @ vertex.co
                 for vertex in vertices
             }
 
@@ -203,7 +203,7 @@ class Octree():
             bbox = mesh_object.bound_box
             root.center = Vector(0.125 * sum(t) for t in zip(*bbox))
             if space == 'WORLD':
-                root.center = matrix_world * root.center
+                root.center = matrix_world @ root.center
 
             # Set the octree root node's half size to slightly more than the
             # largest dimension of the bounding box.  This ensures that the
