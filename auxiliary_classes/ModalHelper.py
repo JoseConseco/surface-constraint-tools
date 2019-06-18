@@ -34,7 +34,7 @@ class ModalHelper():
         # Supplying keymap names and operator ids filters the map to include
         # only event mappings from certain keymaps for particular operators.
         event_map = self.event_map
-        keyconfig = bpy.context.window_manager.keyconfigs['Blender User']
+        keyconfig = bpy.context.window_manager.keyconfigs['blender user']
         available_keymaps = keyconfig.keymaps
 
         # If the keymap names are unspecified, search all available keymaps.
